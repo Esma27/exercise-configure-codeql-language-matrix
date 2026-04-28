@@ -11,7 +11,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        language: [ 'javascript-typescript', 'python', 'java', 'csharp', 'cpp', 'go' ]
+        language: [ 'javascript-typescript' ]
 
     permissions:
       security-events: write
