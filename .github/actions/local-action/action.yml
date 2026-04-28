@@ -1,7 +1,31 @@
-name: "local-action"
-description: Grading action for local exercise
-author: githubtraining
+name: "Code Scanning - Action"
 
-runs:
-  using: node12
-  main: "dist/index.js"
+on:
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  CodeQL-Build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        language: [ 'javascript-typescript' ]
+
+    permissions:
+      security-events: write
+      actions: read
+      contents: read
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: ${{ matrix.language }}
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
